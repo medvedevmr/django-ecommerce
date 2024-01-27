@@ -10,6 +10,65 @@
                 </div>
             </div>
         </header>
-        
+        <br/>
+        <div class="container">
+            {% if cart_products %}
+                {% for product in cart_products %}
+                <div class='container'>
+                    <br/>
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h5 class="card-title">{{product.name}}</h5>
+                                <p class="card-text">{{product.description}}</p>
+                    
+                                {% if product.is_sale %}
+                                    <strike>${{product.price}}</strike>
+                                    <br/>
+                                    ${{product.sale_price}}
+                                {% else %}
+                                    ${{product.price}}
+                                {% endif %}
+                                <br/><br/>
+                                <div class="row justify-content-left">
+                                    <div class="col-md-2">Quantity:</div>
+                                      <div class="col-md-2">
+                                      <select class="form-select" id="qty-cart">
+                                        
+                                            {% for key, value in quantities.items %}
+                                                {% if key == product.id|slugify %}
+
+                                                <option selected>{{ value }}</option>
+
+                                                {% endif%}
+
+                                            {% endfor %}
+
+                                        
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                      </select>
+                                      </div>
+                                    </div>
+                                  <br/><br/>
+                                <a href="{% url 'home' %}" class="btn btn-secondary">Remove From Cart</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                    Your Cart Is Empty
+            {% endif %}
+        </div>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 {% endblock %}
